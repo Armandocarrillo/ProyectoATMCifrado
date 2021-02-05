@@ -12,8 +12,10 @@ public static void main(String a[]) throws Exception
  ServerSocket serverSocket = null;
  Socket socket = null;
  String peticion = null;
+ String peticionInicial = null;
  String respuesta = null;
-String bienvenida = "Bievenido a ATM\n\tPresiona una opcion:\n1.Consultar\n2.Depositar\n3.Retirar\n";
+ Integer contador = 0;
+String bienvenida = "Bievenido a ATM\n\tPresiona una opcion:\nCONSULTAR\nDEPOSITAR\nRETIRAR\n";
 
 
 
@@ -64,15 +66,26 @@ while(true)
 		DataInputStream dis = new DataInputStream( socket.getInputStream() );
 		DataOutputStream dos = new DataOutputStream( socket.getOutputStream() );
 		
-
+		///
+		peticionInicial = bienvenida;
+		 System.out.println( "Mi peticion es: " + peticionInicial );
+		 System.out.println( "Ahora encriptamos la peticion..." );
+		 byte[] arrayPeticionInicial = peticionInicial.getBytes();
+		 Cipher cifrarInicial = Cipher.getInstance("DES");
+		 cifrarInicial.init(Cipher.ENCRYPT_MODE, llave);
+		 byte[] cipherTextInicial = cifrarInicial.doFinal( arrayPeticionInicial );
+		 bytesToBits( cipherTextInicial );
+		 
+		 dos.write( cipherTextInicial, 0, cipherTextInicial.length );
+		
 
 
 		 while(true){//inicio while 2
 
-		 	byte arreglo[] = new byte[10000];
+		 byte arreglo[] = new byte[10000];
 	 	 BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
 		 System.out.println("\n\nEscribe un mensaje para el Cliente");
-		 peticion = bienvenida;//br.readLine();
+		 peticion = "depositame";//br.readLine();
 		 System.out.println( "Mi peticion es: " + peticion );
 		 System.out.println( "Ahora encriptamos la peticion..." );
 		 byte[] arrayPeticion = peticion.getBytes();
@@ -85,7 +98,7 @@ while(true)
 		 
 		 if (peticion.equals("SALIR")){
 		 	break;
-		 } 
+		 }
 		 
 		int bytesLeidos = dis.read(arreglo);
 		
@@ -107,13 +120,14 @@ while(true)
 		 	break;
 		} else if (messageReceivedInPlainText.equals("DEPOSITAR")){
 			System.out.println("\n\n El cliente esta depositando");
-		 	break;
+
+		 	continue;
 		} else if (messageReceivedInPlainText.equals("CONSULTAR")){
 			System.out.println("\n\n El cliente esta consultando");
-		 	break;
+		 	continue;
 		} else if (messageReceivedInPlainText.equals("RETIRAR")){
 			System.out.println("\n\n El cliente esta retirando");
-		 	break;
+		 	continue;
 		}
 
 		 	
