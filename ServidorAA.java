@@ -1,4 +1,3 @@
-
 // se ejecuta en terminal asi: java ServidorAA 8080
 import java.net.*;
 import java.io.*;
@@ -73,7 +72,7 @@ while(true)
 		 	byte arreglo[] = new byte[10000];
 	 	 BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
 		 System.out.println("\n\nEscribe un mensaje para el Cliente");
-		 peticion = br.readLine();
+		 peticion = bienvenida;//br.readLine();
 		 System.out.println( "Mi peticion es: " + peticion );
 		 System.out.println( "Ahora encriptamos la peticion..." );
 		 byte[] arrayPeticion = peticion.getBytes();
@@ -86,7 +85,7 @@ while(true)
 		 
 		 if (peticion.equals("SALIR")){
 		 	break;
-		 }
+		 } 
 		 
 		int bytesLeidos = dis.read(arreglo);
 		
@@ -105,6 +104,15 @@ while(true)
 		
 		if (messageReceivedInPlainText.equals("SALIR")){
 			System.out.println("\n\n El servidor ha cerrado la conexion");
+		 	break;
+		} else if (messageReceivedInPlainText.equals("DEPOSITAR")){
+			System.out.println("\n\n El cliente esta depositando");
+		 	break;
+		} else if (messageReceivedInPlainText.equals("CONSULTAR")){
+			System.out.println("\n\n El cliente esta consultando");
+		 	break;
+		} else if (messageReceivedInPlainText.equals("RETIRAR")){
+			System.out.println("\n\n El cliente esta retirando");
 		 	break;
 		}
 

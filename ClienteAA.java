@@ -36,7 +36,7 @@ if (a.length > 0){
 
 
 
-	 while(true){ //inicio while 2
+	 //while(true){ //inicio while 2
 
 		
 			int bytesLeidos = dis.read(arreglo);
@@ -74,7 +74,7 @@ if (a.length > 0){
 		 		break;
 			 }
 
-		} //cierre while 2
+		//} //cierre while 2
 
 	 
 	 dos.close();
